@@ -5,13 +5,19 @@
   <title>Redirección Secuencial</title>
   <script>
     const grupos = [
-      "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47",
-      "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V",
-      "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK",
-      "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ",
-      "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"
+      "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47", // Grupo 1
+      "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V", // Grupo 2
+      "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK", // Grupo 3
+      "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ", // Grupo 4
+      "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC", // Grupo 5
+      "https://chat.whatsapp.com/LGWAZmg40B3Ekvn0KALHIq", // Grupo 6
+      "https://chat.whatsapp.com/Jp4tcPTqWh4DqlrmxnP2TR", // Grupo 7
+      "https://chat.whatsapp.com/I6n46y08RJvC3iwmtxsGbX", // Grupo 8
+      "https://chat.whatsapp.com/Hrn0KsCAAYQF0aRBDMJCKF", // Grupo 9
+      "https://chat.whatsapp.com/CjOzhLyhxoFCqT1NJ7fGYZ"  // Grupo 10
     ];
 
+    // Redirección secuencial usando localStorage
     window.onload = function () {
       let index = parseInt(localStorage.getItem("grupoIndex")) || 0;
       window.location.href = grupos[index];
