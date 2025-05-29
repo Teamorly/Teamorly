@@ -20,8 +20,6 @@
       margin-top: 20px;
     }
   </style>
-
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
@@ -44,6 +42,8 @@
     firebase.initializeApp(firebaseConfig);
 
     const database = firebase.database();
+    const ref = database.ref("contador");
+
     const enlaces = [
       "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47", // Grupo 1
       "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V", // Grupo 2
@@ -52,15 +52,20 @@
       "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"  // Grupo 5
     ];
 
-    const ref = database.ref("contador");
+    ref.once("value").then(snapshot => {
+      let valor = snapshot.val() || 0;
+      let siguiente = valor % enlaces.length;
 
-    ref.transaction(function (currentValue) {
-      if (currentValue === null) currentValue = 0;
-      const siguiente = currentValue % enlaces.length;
-      setTimeout(() => {
-        window.location.href = enlaces[siguiente];
-      }, 1500); // Redirección en 1.5 segundos
-      return currentValue + 1;
+      // Actualizar el contador antes de redirigir
+      ref.set(valor + 1)
+        .then(() => {
+          setTimeout(() => {
+            window.location.href = enlaces[siguiente];
+          }, 1000); // Espera opcional para mostrar mensaje
+        })
+        .catch(error => {
+          console.error("Error al actualizar el contador:", error);
+        });
     });
   </script>
 </body>
