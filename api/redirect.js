@@ -8,11 +8,15 @@ export default async function handler(request, response) {
   ];
 
   try {
-    const res = await fetch("https://api.countapi.xyz/hit/teamorly/vercel");
+    // NUEVO contador global limpio
+    const res = await fetch("https://api.countapi.xyz/hit/teamorly-v2/vercel");
     const data = await res.json();
+
+    // Cálculo de grupo correspondiente
     const index = (data.value - 1) % grupos.length;
     const destino = grupos[index];
 
+    // Redirigir
     return response.writeHead(302, { Location: destino }).end();
   } catch (error) {
     return response.status(500).send("Error en la redirección global.");
