@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, get, set } from "firebase/database";
 
-// Configuración de Firebase
+// Configuración de Firebase (tu proyecto "teamorly-c7cb0")
 const firebaseConfig = {
   apiKey: "AIzaSyD7mvF3tnOzMBCH3R7i1QMgsbKyneeyTSg",
   authDomain: "teamorly-c7cb0.firebaseapp.com",
@@ -12,17 +12,16 @@ const firebaseConfig = {
   appId: "1:54759106725:web:c8e58eacad97b8aaabc54c"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Enlaces de grupos de WhatsApp del Team Orly 👑
+// Lista de grupos del Team Orly 👑
 const grupos = [
-  "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47", // Grupo 1
-  "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V", // Grupo 2
-  "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK", // Grupo 3
-  "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ", // Grupo 4
-  "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"  // Grupo 5
+  "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47",
+  "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V",
+  "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK",
+  "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ",
+  "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"
 ];
 
 export default async function handler(req, res) {
@@ -40,6 +39,6 @@ export default async function handler(req, res) {
     res.writeHead(302, { Location: destino });
     res.end();
   } catch (error) {
-    res.status(500).send("Error en la redirección.");
+    res.status(500).send("Error al redirigir.");
   }
 }
