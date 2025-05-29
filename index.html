@@ -10,26 +10,36 @@
       background: #fff8e1;
       color: #444;
       text-align: center;
-      padding: 50px;
+      padding: 40px 20px;
+    }
+    img {
+      width: 120px;
+      border-radius: 50%;
+      margin-bottom: 20px;
     }
     h1 {
       color: #d4af37;
+      font-size: 1.8rem;
     }
     p {
       font-size: 1.1rem;
       margin-top: 20px;
     }
   </style>
+
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
+  <!-- Logo -->
+  <img src="https://i.imgur.com/9Z9Aiyz.png" alt="Logo Team Orly" />
+
   <h1>👑 Team Orly</h1>
   <p>Redireccionando automáticamente al grupo correspondiente...</p>
   <p>Si no eres redirigido, revisa tu conexión o intenta de nuevo.</p>
 
   <script>
-    // Configuración real de Firebase
     var firebaseConfig = {
       apiKey: "AIzaSyD7mvF3tnOzMBCH3R7i1QMgsbKyneeyTSg",
       authDomain: "teamorly-c7cb0.firebaseapp.com",
@@ -56,16 +66,13 @@
       let valor = snapshot.val() || 0;
       let siguiente = valor % enlaces.length;
 
-      // Actualizar el contador antes de redirigir
-      ref.set(valor + 1)
-        .then(() => {
-          setTimeout(() => {
-            window.location.href = enlaces[siguiente];
-          }, 1000); // Espera opcional para mostrar mensaje
-        })
-        .catch(error => {
-          console.error("Error al actualizar el contador:", error);
-        });
+      ref.set(valor + 1).then(() => {
+        setTimeout(() => {
+          window.location.href = enlaces[siguiente];
+        }, 1000);
+      }).catch(error => {
+        console.error("Error al actualizar el contador:", error);
+      });
     });
   </script>
 </body>
