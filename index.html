@@ -31,15 +31,15 @@
   <p>Si no eres redirigido, revisa tu conexión o intenta de nuevo.</p>
 
   <script>
-    // ⚠️ Reemplaza estos datos por los de tu proyecto en Firebase
+    // Configuración real de Firebase
     var firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://TU_PROJECT_ID.firebaseio.com",
-      projectId: "TU_PROJECT_ID",
-      storageBucket: "TU_PROJECT_ID.appspot.com",
-      messagingSenderId: "TU_SENDER_ID",
-      appId: "TU_APP_ID"
+      apiKey: "AIzaSyD7mvF3tnOzMBCH3R7i1QMgsbKyneeyTSg",
+      authDomain: "teamorly-c7cb0.firebaseapp.com",
+      databaseURL: "https://teamorly-c7cb0-default-rtdb.firebaseio.com",
+      projectId: "teamorly-c7cb0",
+      storageBucket: "teamorly-c7cb0.firebasestorage.app",
+      messagingSenderId: "54759106725",
+      appId: "1:54759106725:web:719cba027ff57c42abc54c"
     };
     firebase.initializeApp(firebaseConfig);
 
@@ -59,7 +59,7 @@
       const siguiente = currentValue % enlaces.length;
       setTimeout(() => {
         window.location.href = enlaces[siguiente];
-      }, 1500); // Espera 1.5s antes de redirigir
+      }, 1500); // Redirección en 1.5 segundos
       return currentValue + 1;
     });
   </script>
