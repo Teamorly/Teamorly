@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirección Secuencial</title>
+  <script>
+    const grupos = [
+      "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47",
+      "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V",
+      "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK",
+      "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ",
+      "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"
+    ];
+
+    window.onload = function () {
+      let index = parseInt(localStorage.getItem("grupoIndex")) || 0;
+      window.location.href = grupos[index];
+      index = (index + 1) % grupos.length;
+      localStorage.setItem("grupoIndex", index);
+    };
+  </script>
+</head>
+<body>
+  <p>Redirigiendo...</p>
+</body>
+</html>
