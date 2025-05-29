@@ -12,11 +12,6 @@
       text-align: center;
       padding: 40px 20px;
     }
-    img {
-      width: 120px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-    }
     h1 {
       color: #d4af37;
       font-size: 1.8rem;
@@ -32,14 +27,13 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
-  <!-- Logo cargado desde GitHub (mismo repositorio) -->
-  <img src="logo-orly.png" alt="Logo Team Orly" />
 
   <h1>👑 Team Orly</h1>
   <p>Redireccionando automáticamente al grupo correspondiente...</p>
   <p>Si no eres redirigido, revisa tu conexión o intenta de nuevo.</p>
 
   <script>
+    // Configuración Firebase (correcta y probada)
     var firebaseConfig = {
       apiKey: "AIzaSyD7mvF3tnOzMBCH3R7i1QMgsbKyneeyTSg",
       authDomain: "teamorly-c7cb0.firebaseapp.com",
@@ -67,11 +61,10 @@
       let siguiente = valor % enlaces.length;
 
       ref.set(valor + 1).then(() => {
-        setTimeout(() => {
-          window.location.href = enlaces[siguiente];
-        }, 1000);
+        window.location.href = enlaces[siguiente];
       }).catch(error => {
         console.error("Error al actualizar el contador:", error);
+        alert("Error al redirigir. Intenta de nuevo.");
       });
     });
   </script>
