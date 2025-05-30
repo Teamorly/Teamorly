@@ -36,11 +36,10 @@ export default async function handler(req, res) {
     const index = currentClick % groupLinks.length;
     const redirectUrl = groupLinks[index];
 
-    res.writeHead(302, { Location: redirectUrl });
-    res.end();
+    return res.redirect(302, redirectUrl);
 
   } catch (err) {
     console.error('Redirect failed:', err);
-    res.status(500).json({ error: 'Redirection error', message: err.message });
+    return res.status(500).json({ error: 'Redirection error', message: err.message });
   }
 }
