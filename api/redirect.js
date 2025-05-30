@@ -1,42 +1,41 @@
-const admin = require("firebase-admin");
-const serviceAccount = {
-  "type": "service_account",
-  "project_id": "teamorly-c7cb0",
-  "private_key_id": "tu_private_key_id",
-  "private_key": "-----BEGIN PRIVATE KEY-----\ntu_clave_aquí\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk@teamorly-c7cb0.iam.gserviceaccount.com",
-  "client_id": "54759106725",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk@teamorly-c7cb0.iam.gserviceaccount.com"
-};
+// Archivo: /api/redirect.js
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://teamorly-c7cb0-default-rtdb.firebaseio.com"
-  });
-}
+import { createClient } from '@supabase/supabase-js';
 
-const db = admin.database();
+const supabaseUrl = 'https://YOUR_PROJECT_ID.supabase.co'; // Reemplaza con tu URL de Supabase
+const supabaseKey = 'TU_CLAVE_PUBLICA_AQUI'; // Reemplaza con tu anon key
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const links = [
+  'https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47', // Grupo 1
+  'https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V', // Grupo 2
+  'https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK', // Grupo 3
+  'https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ', // Grupo 4
+  'https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC'  // Grupo 5
+];
 
 export default async function handler(req, res) {
-  const ref = db.ref("contador");
-  const snapshot = await ref.once("value");
-  const valor = snapshot.val() || 0;
+  const { data, error } = await supabase
+    .from('Czechgirls')
+    .select('clic')
+    .eq('id', 1)
+    .single();
 
-  const enlaces = [
-    "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47",
-    "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V",
-    "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK",
-    "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ",
-    "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"
-  ];
+  if (error || !data) {
+    return res.status(500).send('Error obteniendo el contador');
+  }
 
-  const siguiente = valor % enlaces.length;
-  await ref.set(valor + 1);
+  const nextIndex = data.clic % links.length;
 
-  res.writeHead(302, { Location: enlaces[siguiente] });
+  const { error: updateError } = await supabase
+    .from('Czechgirls')
+    .update({ clic: data.clic + 1 })
+    .eq('id', 1);
+
+  if (updateError) {
+    return res.status(500).send('Error actualizando el contador');
+  }
+
+  res.writeHead(302, { Location: links[nextIndex] });
   res.end();
 }
