@@ -1,72 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Team Orly 👑</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #fff8e1;
-      color: #444;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    h1 {
-      color: #d4af37;
-      font-size: 1.8rem;
-    }
-    p {
-      font-size: 1.1rem;
-      margin-top: 20px;
-    }
-  </style>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-</head>
-<body>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyD7mvF3tnOzMBCH3R7i1QMgsbKyneeyTSg",
+    authDomain: "teamorly-c7cb0.firebaseapp.com",
+    databaseURL: "https://teamorly-c7cb0-default-rtdb.firebaseio.com",
+    projectId: "teamorly-c7cb0",
+    storageBucket: "teamorly-c7cb0.appspot.com",
+    messagingSenderId: "54759106725",
+    appId: "1:54759106725:web:719cba027ff57c42abc54c"
+  };
+  firebase.initializeApp(firebaseConfig);
 
-  <h1>👑 Team Orly</h1>
-  <p>Redireccionando automáticamente al grupo correspondiente...</p>
-  <p>Si no eres redirigido, revisa tu conexión o intenta de nuevo.</p>
+  const database = firebase.database();
+  const ref = database.ref("contador");
 
-  <script>
-    // Configuración Firebase (correcta y probada)
-    var firebaseConfig = {
-      apiKey: "AIzaSyD7mvF3tnOzMBCH3R7i1QMgsbKyneeyTSg",
-      authDomain: "teamorly-c7cb0.firebaseapp.com",
-      databaseURL: "https://teamorly-c7cb0-default-rtdb.firebaseio.com",
-      projectId: "teamorly-c7cb0",
-      storageBucket: "teamorly-c7cb0.firebasestorage.app",
-      messagingSenderId: "54759106725",
-      appId: "1:54759106725:web:719cba027ff57c42abc54c"
-    };
-    firebase.initializeApp(firebaseConfig);
+  const enlaces = [
+    "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47", // Grupo 1
+    "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V", // Grupo 2
+    "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK", // Grupo 3
+    "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ", // Grupo 4
+    "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"  // Grupo 5
+  ];
 
-    const database = firebase.database();
-    const ref = database.ref("contador");
+  ref.once("value").then(snapshot => {
+    let valor = snapshot.val() || 0;
+    let siguiente = valor % enlaces.length;
 
-    const enlaces = [
-      "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47", // Grupo 1
-      "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V", // Grupo 2
-      "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK", // Grupo 3
-      "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ", // Grupo 4
-      "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"  // Grupo 5
-    ];
-
-    ref.once("value").then(snapshot => {
-      let valor = snapshot.val() || 0;
-      let siguiente = valor % enlaces.length;
-
-      ref.set(valor + 1).then(() => {
-        window.location.href = enlaces[siguiente];
-      }).catch(error => {
-        console.error("Error al actualizar el contador:", error);
-        alert("Error al redirigir. Intenta de nuevo.");
-      });
-    });
-  </script>
-</body>
-</html>
+    ref.set(valor + 1).then(() => {
+      window.location.href = enlaces[siguiente];
+    }).catch(error => {
+      console.error("Error al actualizar el contador:", error);
+      alert("Error al redirigir. Intenta de nuevo.");
+    });
+  });
+</script>
