@@ -1,35 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Team Orly 👑</title>
-    <style>
-      body {
-        font-family: 'Segoe UI', sans-serif;
-        background: #fff8e1;
-        color: #444;
-        text-align: center;
-        padding: 40px 20px;
-      }
-      h1 {
-        color: #d4af37;
-        font-size: 1.8rem;
-      }
-      p {
-        font-size: 1.1rem;
-        margin-top: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>👑 Team Orly</h1>
-    <p>Redireccionando automáticamente...</p>
-    <p>Si no eres redirigido, revisa tu conexión o <a href="/api/redirect">haz clic aquí</a>.</p>
-    <script>
-      setTimeout(() => {
-        window.location.href = "/api/redirect";
-      }, 1000);
-    </script>
-  </body>
-</html>
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
+
+const groupLinks = [
+  "https://chat.whatsapp.com/HsaBuLsrdPO4V21yjIQv47",
+  "https://chat.whatsapp.com/LgnVlowLUYT9cZae0bEI5V",
+  "https://chat.whatsapp.com/D4qSliHepxsEVmCFHm7fZK",
+  "https://chat.whatsapp.com/KFm5iHFYDgdA5RJ7LXWddZ",
+  "https://chat.whatsapp.com/Db2qc5V6ramIhAMh3eLcIC"
+];
+
+export default async function handler(req, res) {
+  try {
+    const { data, error } = await supabase
+      .from('Czechgirls')
+      .select('clicks')
+      .eq('id', 1)
+      .single();
+
+    if (error) throw error;
+
+    const currentClick = data?.clicks || 0;
+    const newClick = currentClick + 1;
+
+    const { error: updateError } = await supabase
+      .from('Czechgirls')
+      .update({ clicks: newClick })
+      .eq('id', 1);
+
+    if (updateError) throw updateError;
+
+    const index = currentClick % groupLinks.length;
+    const redirectUrl = groupLinks[index];
+
+    res.writeHead(302, { Location: redirectUrl });
+    res.end();
+
+  } catch (err) {
+    console.error('Redirect failed:', err);
+    res.status(500).json({ error: 'Redirection error', message: err.message });
+  }
+}
